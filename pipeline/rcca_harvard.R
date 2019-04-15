@@ -1,3 +1,5 @@
+#Largely from http://mixomics.org/methods/rcca/ with a few
+#helper functions from Logan
 rcc = function (X, Y, ncomp = 2, method = "ridge", lambda1 = 0, lambda2 = 0) 
 {
   arg.call = match.call()
