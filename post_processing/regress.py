@@ -1,3 +1,19 @@
+#!/usr/bin/env python3
+#
+#Remember to load your conda environment, or otherwise ensure dependencies are accessible
+
+"""
+copied/adapted from original code here: https://github.com/faskowit/app-fmri-2-mat
+"""
+
+import os
+import csv
+import argparse
+import nibabel as nib
+import numpy as np
+from nilearn import input_data, image
+import pandas as pd
+
 def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0):
     """
