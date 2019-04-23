@@ -264,9 +264,9 @@ def main():
     nrImg, outldf, outdfstat = nuisance_regress(inputImg, inputMask, args.confounds, inputtr=args.tr, conftype=args.strategy, spikethr=args.spikethr, smoothkern=args.fwhm)
 
     # write it
-    nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))
-    outldf.to_csv(''.join([args.out, '_outlierdf.csv']))
-    outdfstat.to_csv(''.join([args.out, '_outlierstat.csv']))
+    nib.save(nrImg, ''.join([args.out, 'nuisanced_bold.nii.gz']))
+    outldf.to_csv(''.join([args.out, 'outlierdf.csv']))
+    outdfstat.to_csv(''.join([args.out, 'outlierstat.csv']))
 
 
 if __name__ == '__main__':
