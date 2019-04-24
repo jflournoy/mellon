@@ -55,6 +55,18 @@ subjects=(`cat $subject_list`)
 #run a loop
 for subj in ${subjects[*]} ; do
 	echo "Checking $subj"
+
+	subj_rs_bold=$( ls ${bids_derivs}/${subj}/ses-F09/func/${subj}_ses-F09_task-rest_acq-*_run-*_space-${space}_desc-${bold_postfix} )
+	subj_mask=$( ls ${bids_derivs}/${subj}/ses-F09/func/${subj}_ses-F09_task-rest_acq-*_run-*_space-${space}_desc-${mask_postfix} )
+	subj_confounds=$( ls ${bids_derivs}/${subj}/ses-F09/func/${subj}_ses-F09_task-rest_acq-*_run-*_desc-${confounds_postfix} )
+	rs_filename=$( basename ${subj_rs_bold} )
+	filename_stem=${rs_filename%${bold_postfix}}
+
+	subj_outdir=${outdir}/${subj}/ses-F09/func
+	subj_dspk_out=${subj_outdir}/${filename_stem}${despike_postfix}
+	subj_mtcr_out=${subj_outdir}/${filename_stem}
+	subj_mtcr_check=${subj_outdir}/${filename_stem}nuisanced_bold.nii.gz
+
         #check if the 'target' processing is done
         if [ -e ${subj_mtcr_check} ] ; then
 		#if it is there, skip
@@ -69,17 +81,6 @@ for subj in ${subjects[*]} ; do
         fi
 	touch ${isRunning}/isRunning.${subj}.${postfix}
 
-	subj_rs_bold=$( ls ${bids_derivs}/${subj}/ses-F09/func/${subj}_ses-F09_task-rest_acq-*_run-*_space-${space}_desc-${bold_postfix} )
-	subj_mask=$( ls ${bids_derivs}/${subj}/ses-F09/func/${subj}_ses-F09_task-rest_acq-*_run-*_space-${space}_desc-${mask_postfix} )
-	subj_confounds=$( ls ${bids_derivs}/${subj}/ses-F09/func/${subj}_ses-F09_task-rest_acq-*_run-*_desc-${confounds_postfix} )
-	rs_filename=$( basename ${subj_rs_bold} )
-	filename_stem=${rs_filename%${bold_postfix}}
-
-	subj_outdir=${outdir}/${subj}/ses-F09/func
-	subj_dspk_out=${subj_outdir}/${filename_stem}${despike_postfix}
-	subj_mtcr_out=${subj_outdir}/${filename_stem}
-	subj_mtcr_check=${subj_outdir}/${filename_stem}nuisanced_bold.nii.gz
-
 	echo "RS input: ${subj_rs_bold}"
 	echo "Mask file: ${subj_mask}"
 	echo "rs_filename: ${rs_filename}"
@@ -88,12 +89,14 @@ for subj in ${subjects[*]} ; do
 	echo "Motion corrected out: ${subj_mtcr_out}*"
 
 	#check if the source files exist
-	if [ ! -e ${subj_rs_bold} ] ; then
+	if [ -z "${subj_rs_bold}" ] || [ ! -e ${subj_rs_bold} ] ; then
 		echo "File ${subj_rs_bold} does not exist" | tee -a ${isRunning}/isRunning.${subj}.${postfix}.err
+        	rm ${isRunning}/isRunning.${subj}.${postfix}
 		continue
 	fi
 	if [ ! -e ${subj_mask} ] ; then
 		echo "Mask file ${subj_mask} does not exist" | tee -a ${isRunning}/isRunning.${subj}.${postfix}.err
+        	rm ${isRunning}/isRunning.${subj}.${postfix}
 		continue
 	fi		
 	#check if subjects motion correciton output directory exists, if not, make it
@@ -105,6 +108,13 @@ for subj in ${subjects[*]} ; do
 	if [ ! -e ${subj_dspk_out} ] ; then
 		echo "Despiking BOLD timeseries: ${subj_rs_bold}"
 		3dDespike -NEW -nomask -prefix ${subj_dspk_out} ${subj_rs_bold}
+		despike_retval=$?
+		if [ ! $despike_retval -eq 0 ]; then
+			echo "3dDespike failed on ${subj_rs_bold}: return value $despike_retval \n(Probably too few TRs)" | tee -a ${isRunning}/isRunning.${subj}.${postfix}.err
+			rm ${isRunning}/isRunning.${subj}.${postfix}
+			continue
+		fi
+
 	fi
 	echo "Running motion correction on ${subj_dspk_out}"
 	python $regress_script -strategy "36P" -spikethr .5 -fwhm 5 -out $subj_mtcr_out $subj_rs_bold $subj_mask $subj_confounds
