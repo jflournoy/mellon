@@ -32,7 +32,7 @@ regress_script="/users/jflournoy/otherhome/code/GenR/post_processing/regress.py"
 
 #set some paths
 bids_derivs="/net/holynfs01/srv/export/mclaughlin/share_root/stressdevlab/GenR_derivatives/fmriprep"
-outdir="/net/holynfs01/srv/export/mclaughlin/share_root/stressdevlab/GenR_derivatives/fmriprep"
+outdir="/net/holynfs01/srv/export/mclaughlin/share_root/stressdevlab/GenR_derivatives/motion"
 
 #set to either T1w, or MNI152NLin2009cAsym
 space="MNI152NLin2009cAsym"
@@ -62,7 +62,7 @@ for subj in ${subjects[*]} ; do
 	rs_filename=$( basename ${subj_rs_bold} )
 	filename_stem=${rs_filename%${bold_postfix}}
 
-	subj_outdir=${outdir}/${subj}/ses-F09/func
+	subj_outdir=${outdir}/${subj}/ses-1/func
 	subj_dspk_out=${subj_outdir}/${filename_stem}${despike_postfix}
 	subj_mtcr_out=${subj_outdir}/${filename_stem}
 	subj_mtcr_check=${subj_outdir}/${filename_stem}nuisanced_bold.nii.gz
