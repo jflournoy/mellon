@@ -15,7 +15,7 @@ from nilearn import input_data, image
 import pandas as pd
 
 def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
-    conftype="36P", spikethr=0.25, smoothkern=6.0):
+    conftype="36P", spikethr=0.25, smoothkern=6.0, drop_first=5):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -55,24 +55,25 @@ def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
     else:
         tr = inputtr
 
+    #create 4D sample mask to exclude the first `drop_first` volumes
+    total_volumes = inputimg.shape[3]
+    sample_mask = [False] * drop_first + [True] * (total_volumes - drop_first)
+    print("total volumes: {}, dropping first {}".format(str(total_volumes), str(drop_first)))
+
     # masker params
     masker_params = {"mask_img": inputmask, "detrend": True, "standardize": True,
                      "low_pass": 0.08, "high_pass": 0.01, "t_r": tr,
-                     "smoothing_fwhm": smoothkern, "verbose": 1, }
-
+                     "smoothing_fwhm": smoothkern, "verbose": 1, "sample_mask": sample_mask}
     # invoke masker
     masker = input_data.NiftiMasker(**masker_params)
 
     # perform the nuisance regression
-    time_series = masker.fit_transform(inputimg, confounds=confounds.values)
+    time_series = masker.fit_transform(inputimg, confounds=confounds.loc[sample_mask,].values)
 
     # inverse masker operation to get the nifti object, n.b. this returns a Nifti1Image!!!
     outImg = masker.inverse_transform(time_series)
 
-    # get rid of the first four volumes
-    outImg4 = image.index_img(outImg, np.arange(4, outImg.shape[3]))
-
-    return outImg4, confounds, outlier_stats
+    return outImg, confounds, outlier_stats
 
 
 def get_spikereg_confounds(motion_ts, dvars, fd_threshold, dvars_threshold=None):
