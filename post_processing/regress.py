@@ -198,6 +198,8 @@ def get_confounds(confounds_file, kind="36P", spikereg_fd_threshold=None, spiker
 
     if kind == "36P":
         confounds = p36
+    elif kind == "18P":
+        confounds = p18
     elif kind == "9P":
         confounds = p9
     elif kind == "6P":
@@ -239,12 +241,14 @@ def main():
     parser.add_argument('confounds', type=str, help='input confounds file (from fmriprep)')
     parser.add_argument('-tr', type=float, help='tr of image (for bandpass filtering)', default=0)
     parser.add_argument('-strategy', type=str, help='confound strategy',
-                        choices=["36P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"],
+                        choices=["36P", "18P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"],
                         default='36P')
     parser.add_argument('-spikethr', type=float, help='spike threshold value',
                         default=0.5)
     parser.add_argument('-fwhm', type=float, help='smoothing fwhm',
                         default=6.0)
+    parser.add_argument('-drop', type=int, help='number of volumes to drop from beginning of the timeseries',
+                        default=5.0)
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
 
@@ -256,18 +260,22 @@ def main():
     for arg in vars(args):
         print("{} {}".format(str(arg), str(getattr(args, arg))))
     print("END ARGS\n")
-
+    
+    print("Reading in images...")
     # read in the data
     inputImg = nib.load(args.fmri)
     inputMask = nib.load(args.mask)
 
+    print("Cleaning image...")
     # call nuisance regress, get a nib Nifti1Image
-    nrImg, outldf, outdfstat = nuisance_regress(inputImg, inputMask, args.confounds, inputtr=args.tr, conftype=args.strategy, spikethr=args.spikethr, smoothkern=args.fwhm)
+    nrImg, outldf, outdfstat = nuisance_regress(inputImg, inputMask, args.confounds, inputtr=args.tr, conftype=args.strategy, spikethr=args.spikethr, smoothkern=args.fwhm, drop_first=args.drop)
 
     # write it
+    print("Saving cleaned image and outlier information...")
     nib.save(nrImg, ''.join([args.out, 'nuisanced_bold.nii.gz']))
     outldf.to_csv(''.join([args.out, 'outlierdf.csv']))
     outdfstat.to_csv(''.join([args.out, 'outlierstat.csv']))
+    print("Done with nuisance regression.")
 
 
 if __name__ == '__main__':

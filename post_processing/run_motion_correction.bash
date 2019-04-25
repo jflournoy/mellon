@@ -2,6 +2,7 @@
 #
 #ensure you've run `scl enable rh-python36 bash`
 
+OVERWRITE_REGRESS=0
 
 #set to ensure 3dDespike uses only 1 thread
 export OMP_NUM_THREADS=1
@@ -42,7 +43,9 @@ bold_postfix="preproc_bold.nii.gz"
 despike_postfix="despike_bold.nii.gz"
 confounds_postfix="confounds_regressors.tsv"
 
-subject_list="/home/jflournoy/code/mellon/post_processing/subject_list.txt"
+#subject_list="/home/jflournoy/code/mellon/post_processing/subject_list.txt"
+subject_list=$1
+echo "using subject list $subject_list"
 
 #for isRunning
 postfix="motcorr"
@@ -68,7 +71,7 @@ for subj in ${subjects[*]} ; do
 	subj_mtcr_check=${subj_outdir}/${filename_stem}nuisanced_bold.nii.gz
 
         #check if the 'target' processing is done
-        if [ -e ${subj_mtcr_check} ] ; then
+        if [ -e ${subj_mtcr_check} ] && [ ! $OVERWRITE_REGRESS -eq 1 ] ; then
 		#if it is there, skip
                 echo "Skipping ${subj}: output exists" 
                 continue
@@ -117,7 +120,7 @@ for subj in ${subjects[*]} ; do
 
 	fi
 	echo "Running motion correction on ${subj_dspk_out}"
-	python $regress_script -strategy "36P" -spikethr .5 -fwhm 5 -out $subj_mtcr_out $subj_rs_bold $subj_mask $subj_confounds
+	python $regress_script -strategy "36P" -spikethr .5 -fwhm 5 -drop 5 -out $subj_mtcr_out ${subj_dspk_out} $subj_mask $subj_confounds
 	
 
         #clean up isRunning file if you want

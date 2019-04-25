@@ -56,10 +56,10 @@ summary_of_df <- df[, .(total = .N,
                         `<200` = sum(total < 200), 
                         `<4.5 min` = sum(clean_trs < min_trs))]
 
-sids_with_short_runs <- df[total < 200, .(sid, total)]
-sids_with_much_bad_data <- df[clean_trs < min_trs, .(sid, clean_trs)]
+sids_with_short_runs <- df[total < 200, .(sid, clean_trs, total)]
+sids_with_much_bad_data <- df[clean_trs < min_trs, .(sid, clean_trs, total)]
 
-all_bad_sids <- merge(sids_with_short_runs, sids_with_much_bad_data, by = "sid", all =T)
+all_bad_sids <- merge(sids_with_short_runs, sids_with_much_bad_data, by = c("sid", "clean_trs", "total"), all =T)
 
 write.csv(all_bad_sids, file = "all_bad_sids.csv", row.names = T)
 
