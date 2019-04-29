@@ -20,7 +20,7 @@ do
 
 	echo "Found voxeldims ${voxeldims[@]}"
 
-	for voxeldim in "${volexdims[@]}"
+	for voxeldim in "${voxeldims[@]}"
 	do
 		echo "${filename},${dim[$dimiter]},${voxeldim}" >> "${outfilename}"
 		((++dimiter))

@@ -1,281 +1,281 @@
-roi,label
-1,Uncertain
-2,Uncertain
-3,Uncertain
-4,Uncertain
-5,Uncertain
-6,Uncertain
-7,Uncertain
-8,Uncertain
-9,Uncertain
-10,Uncertain
-11,Uncertain
-12,Uncertain
-13,Sensory/somatomotor Hand
-14,Sensory/somatomotor Hand
-15,Sensory/somatomotor Hand
-16,Sensory/somatomotor Hand
-17,Sensory/somatomotor Hand
-18,Sensory/somatomotor Hand
-19,Sensory/somatomotor Hand
-20,Sensory/somatomotor Hand
-21,Sensory/somatomotor Hand
-22,Sensory/somatomotor Hand
-23,Sensory/somatomotor Hand
-24,Sensory/somatomotor Hand
-25,Sensory/somatomotor Hand
-26,Sensory/somatomotor Hand
-27,Sensory/somatomotor Hand
-28,Sensory/somatomotor Hand
-29,Sensory/somatomotor Hand
-30,Sensory/somatomotor Hand
-31,Sensory/somatomotor Hand
-32,Sensory/somatomotor Hand
-33,Sensory/somatomotor Hand
-34,Sensory/somatomotor Hand
-35,Sensory/somatomotor Hand
-36,Sensory/somatomotor Hand
-37,Sensory/somatomotor Hand
-38,Sensory/somatomotor Hand
-39,Sensory/somatomotor Hand
-40,Sensory/somatomotor Hand
-41,Sensory/somatomotor Hand
-42,Sensory/somatomotor Mouth
-43,Sensory/somatomotor Mouth
-44,Sensory/somatomotor Mouth
-45,Sensory/somatomotor Mouth
-46,Sensory/somatomotor Mouth
-47,Cingulo-opercular Task Control
-48,Cingulo-opercular Task Control
-49,Cingulo-opercular Task Control
-50,Cingulo-opercular Task Control
-51,Cingulo-opercular Task Control
-52,Cingulo-opercular Task Control
-53,Cingulo-opercular Task Control
-54,Cingulo-opercular Task Control
-55,Cingulo-opercular Task Control
-56,Cingulo-opercular Task Control
-57,Cingulo-opercular Task Control
-58,Cingulo-opercular Task Control
-59,Cingulo-opercular Task Control
-60,Cingulo-opercular Task Control
-61,Auditory
-62,Auditory
-63,Auditory
-64,Auditory
-65,Auditory
-66,Auditory
-67,Auditory
-68,Auditory
-69,Auditory
-70,Auditory
-71,Auditory
-72,Auditory
-73,Auditory
-74,Default mode
-75,Default mode
-76,Default mode
-77,Default mode
-78,Default mode
-79,Default mode
-80,Default mode
-81,Default mode
-82,Default mode
-83,Default mode
-84,Uncertain
-85,Uncertain
-86,Default mode
-87,Default mode
-88,Default mode
-89,Default mode
-90,Default mode
-91,Default mode
-92,Default mode
-93,Default mode
-94,Default mode
-95,Default mode
-96,Default mode
-97,Default mode
-98,Default mode
-99,Default mode
-100,Default mode
-101,Default mode
-102,Default mode
-103,Default mode
-104,Default mode
-105,Default mode
-106,Default mode
-107,Default mode
-108,Default mode
-109,Default mode
-110,Default mode
-111,Default mode
-112,Default mode
-113,Default mode
-114,Default mode
-115,Default mode
-116,Default mode
-117,Default mode
-118,Default mode
-119,Default mode
-120,Default mode
-121,Default mode
-122,Default mode
-123,Default mode
-124,Default mode
-125,Default mode
-126,Default mode
-127,Default mode
-128,Default mode
-129,Default mode
-130,Default mode
-131,Default mode
-132,Uncertain
-133,Memory retrieval?
-134,Memory retrieval?
-135,Memory retrieval?
-136,Memory retrieval?
-137,Default mode
-138,Ventral attention
-139,Default mode
-140,Uncertain
-141,Uncertain
-142,Uncertain
-143,Visual
-144,Visual
-145,Visual
-146,Visual
-147,Visual
-148,Visual
-149,Visual
-150,Visual
-151,Visual
-152,Visual
-153,Visual
-154,Visual
-155,Visual
-156,Visual
-157,Visual
-158,Visual
-159,Visual
-160,Visual
-161,Visual
-162,Visual
-163,Visual
-164,Visual
-165,Visual
-166,Visual
-167,Visual
-168,Visual
-169,Visual
-170,Visual
-171,Visual
-172,Visual
-173,Visual
-174,Fronto-parietal Task Control
-175,Fronto-parietal Task Control
-176,Fronto-parietal Task Control
-177,Fronto-parietal Task Control
-178,Fronto-parietal Task Control
-179,Fronto-parietal Task Control
-180,Fronto-parietal Task Control
-181,Fronto-parietal Task Control
-182,Uncertain
-183,Uncertain
-184,Uncertain
-185,Uncertain
-186,Fronto-parietal Task Control
-187,Fronto-parietal Task Control
-188,Fronto-parietal Task Control
-189,Fronto-parietal Task Control
-190,Fronto-parietal Task Control
-191,Fronto-parietal Task Control
-192,Fronto-parietal Task Control
-193,Fronto-parietal Task Control
-194,Fronto-parietal Task Control
-195,Fronto-parietal Task Control
-196,Fronto-parietal Task Control
-197,Fronto-parietal Task Control
-198,Fronto-parietal Task Control
-199,Fronto-parietal Task Control
-200,Fronto-parietal Task Control
-201,Fronto-parietal Task Control
-202,Fronto-parietal Task Control
-203,Salience
-204,Salience
-205,Salience
-206,Salience
-207,Salience
-208,Salience
-209,Salience
-210,Salience
-211,Salience
-212,Salience
-213,Salience
-214,Salience
-215,Salience
-216,Salience
-217,Salience
-218,Salience
-219,Salience
-220,Salience
-221,Memory retrieval?
-222,Subcortical
-223,Subcortical
-224,Subcortical
-225,Subcortical
-226,Subcortical
-227,Subcortical
-228,Subcortical
-229,Subcortical
-230,Subcortical
-231,Subcortical
-232,Subcortical
-233,Subcortical
-234,Subcortical
-235,Ventral attention
-236,Ventral attention
-237,Ventral attention
-238,Ventral attention
-239,Ventral attention
-240,Ventral attention
-241,Ventral attention
-242,Ventral attention
-243,Cerebellar
-244,Cerebellar
-245,Cerebellar
-246,Cerebellar
-247,Uncertain
-248,Uncertain
-249,Uncertain
-250,Uncertain
-251,Dorsal attention
-252,Dorsal attention
-253,Uncertain
-254,Uncertain
-255,Sensory/somatomotor Hand
-256,Dorsal attention
-257,Dorsal attention
-258,Dorsal attention
-259,Dorsal attention
-260,Dorsal attention
-261,Dorsal attention
-262,Dorsal attention
-263,Dorsal attention
-264,Dorsal attention
-265,L NAcc 
-266,R NAcc 
-267,L sgACC
-268,R sgACC
-269,L Caudate Head
-270,R Caudate Head
-271,L Amyg
-272,R Amyg
-273,L Ventral Hippocampus
-274,R Ventral Hippocampus
-275,LC
-276,VTA
-277,Raphe
-278,LC
-279,VTA
-280,Raphe
+roi,label,X,Y,Z
+1,Uncertain,-25,-98,-12
+2,Uncertain,27,-97,-13
+3,Uncertain,24,32,-18
+4,Uncertain,-56,-45,-24
+5,Uncertain,8,41,-24
+6,Uncertain,-21,-22,-20
+7,Uncertain,17,-28,-17
+8,Uncertain,-37,-29,-26
+9,Uncertain,65,-24,-19
+10,Uncertain,52,-34,-27
+11,Uncertain,55,-31,-17
+12,Uncertain,34,38,-12
+13,Sensory/somatomotor Hand,-7,-52,61
+14,Sensory/somatomotor Hand,-14,-18,40
+15,Sensory/somatomotor Hand,0,-15,47
+16,Sensory/somatomotor Hand,10,-2,45
+17,Sensory/somatomotor Hand,-7,-21,65
+18,Sensory/somatomotor Hand,-7,-33,72
+19,Sensory/somatomotor Hand,13,-33,75
+20,Sensory/somatomotor Hand,-54,-23,43
+21,Sensory/somatomotor Hand,29,-17,71
+22,Sensory/somatomotor Hand,10,-46,73
+23,Sensory/somatomotor Hand,-23,-30,72
+24,Sensory/somatomotor Hand,-40,-19,54
+25,Sensory/somatomotor Hand,29,-39,59
+26,Sensory/somatomotor Hand,50,-20,42
+27,Sensory/somatomotor Hand,-38,-27,69
+28,Sensory/somatomotor Hand,20,-29,60
+29,Sensory/somatomotor Hand,44,-8,57
+30,Sensory/somatomotor Hand,-29,-43,61
+31,Sensory/somatomotor Hand,10,-17,74
+32,Sensory/somatomotor Hand,22,-42,69
+33,Sensory/somatomotor Hand,-45,-32,47
+34,Sensory/somatomotor Hand,-21,-31,61
+35,Sensory/somatomotor Hand,-13,-17,75
+36,Sensory/somatomotor Hand,42,-20,55
+37,Sensory/somatomotor Hand,-38,-15,69
+38,Sensory/somatomotor Hand,-16,-46,73
+39,Sensory/somatomotor Hand,2,-28,60
+40,Sensory/somatomotor Hand,3,-17,58
+41,Sensory/somatomotor Hand,38,-17,45
+42,Sensory/somatomotor Mouth,-49,-11,35
+43,Sensory/somatomotor Mouth,36,-9,14
+44,Sensory/somatomotor Mouth,51,-6,32
+45,Sensory/somatomotor Mouth,-53,-10,24
+46,Sensory/somatomotor Mouth,66,-8,25
+47,Cingulo-opercular Task Control,-3,2,53
+48,Cingulo-opercular Task Control,54,-28,34
+49,Cingulo-opercular Task Control,19,-8,64
+50,Cingulo-opercular Task Control,-16,-5,71
+51,Cingulo-opercular Task Control,-10,-2,42
+52,Cingulo-opercular Task Control,37,1,-4
+53,Cingulo-opercular Task Control,13,-1,70
+54,Cingulo-opercular Task Control,7,8,51
+55,Cingulo-opercular Task Control,-45,0,9
+56,Cingulo-opercular Task Control,49,8,-1
+57,Cingulo-opercular Task Control,-34,3,4
+58,Cingulo-opercular Task Control,-51,8,-2
+59,Cingulo-opercular Task Control,-5,18,34
+60,Cingulo-opercular Task Control,36,10,1
+61,Auditory,32,-26,13
+62,Auditory,65,-33,20
+63,Auditory,58,-16,7
+64,Auditory,-38,-33,17
+65,Auditory,-60,-25,14
+66,Auditory,-49,-26,5
+67,Auditory,43,-23,20
+68,Auditory,-50,-34,26
+69,Auditory,-53,-22,23
+70,Auditory,-55,-9,12
+71,Auditory,56,-5,13
+72,Auditory,59,-17,29
+73,Auditory,-30,-27,12
+74,Default mode,-41,-75,26
+75,Default mode,6,67,-4
+76,Default mode,8,48,-15
+77,Default mode,-13,-40,1
+78,Default mode,-18,63,-9
+79,Default mode,-46,-61,21
+80,Default mode,43,-72,28
+81,Default mode,-44,12,-34
+82,Default mode,46,16,-30
+83,Default mode,-68,-23,-16
+84,Uncertain,-58,-26,-15
+85,Uncertain,27,16,-17
+86,Default mode,-44,-65,35
+87,Default mode,-39,-75,44
+88,Default mode,-7,-55,27
+89,Default mode,6,-59,35
+90,Default mode,-11,-56,16
+91,Default mode,-3,-49,13
+92,Default mode,8,-48,31
+93,Default mode,15,-63,26
+94,Default mode,-2,-37,44
+95,Default mode,11,-54,17
+96,Default mode,52,-59,36
+97,Default mode,23,33,48
+98,Default mode,-10,39,52
+99,Default mode,-16,29,53
+100,Default mode,-35,20,51
+101,Default mode,22,39,39
+102,Default mode,13,55,38
+103,Default mode,-10,55,39
+104,Default mode,-20,45,39
+105,Default mode,6,54,16
+106,Default mode,6,64,22
+107,Default mode,-7,51,-1
+108,Default mode,9,54,3
+109,Default mode,-3,44,-9
+110,Default mode,8,42,-5
+111,Default mode,-11,45,8
+112,Default mode,-2,38,36
+113,Default mode,-3,42,16
+114,Default mode,-20,64,19
+115,Default mode,-8,48,23
+116,Default mode,65,-12,-19
+117,Default mode,-56,-13,-10
+118,Default mode,-58,-30,-4
+119,Default mode,65,-31,-9
+120,Default mode,-68,-41,-5
+121,Default mode,13,30,59
+122,Default mode,12,36,20
+123,Default mode,52,-2,-16
+124,Default mode,-26,-40,-8
+125,Default mode,27,-37,-13
+126,Default mode,-34,-38,-16
+127,Default mode,28,-77,-32
+128,Default mode,52,7,-30
+129,Default mode,-53,3,-27
+130,Default mode,47,-50,29
+131,Default mode,-49,-42,1
+132,Uncertain,-31,19,-19
+133,Memory retrieval?,-2,-35,31
+134,Memory retrieval?,-7,-71,42
+135,Memory retrieval?,11,-66,42
+136,Memory retrieval?,4,-48,51
+137,Default mode,-46,31,-13
+138,Ventral attention,-10,11,67
+139,Default mode,49,35,-12
+140,Uncertain,8,-91,-7
+141,Uncertain,17,-91,-14
+142,Uncertain,-12,-95,-13
+143,Visual,18,-47,-10
+144,Visual,40,-72,14
+145,Visual,8,-72,11
+146,Visual,-8,-81,7
+147,Visual,-28,-79,19
+148,Visual,20,-66,2
+149,Visual,-24,-91,19
+150,Visual,27,-59,-9
+151,Visual,-15,-72,-8
+152,Visual,-18,-68,5
+153,Visual,43,-78,-12
+154,Visual,-47,-76,-10
+155,Visual,-14,-91,31
+156,Visual,15,-87,37
+157,Visual,29,-77,25
+158,Visual,20,-86,-2
+159,Visual,15,-77,31
+160,Visual,-16,-52,-1
+161,Visual,42,-66,-8
+162,Visual,24,-87,24
+163,Visual,6,-72,24
+164,Visual,-42,-74,0
+165,Visual,26,-79,-16
+166,Visual,-16,-77,34
+167,Visual,-3,-81,21
+168,Visual,-40,-88,-6
+169,Visual,37,-84,13
+170,Visual,6,-81,6
+171,Visual,-26,-90,3
+172,Visual,-33,-79,-13
+173,Visual,37,-81,1
+174,Fronto-parietal Task Control,-44,2,46
+175,Fronto-parietal Task Control,48,25,27
+176,Fronto-parietal Task Control,-47,11,23
+177,Fronto-parietal Task Control,-53,-49,43
+178,Fronto-parietal Task Control,-23,11,64
+179,Fronto-parietal Task Control,58,-53,-14
+180,Fronto-parietal Task Control,24,45,-15
+181,Fronto-parietal Task Control,34,54,-13
+182,Uncertain,-21,41,-20
+183,Uncertain,-18,-76,-24
+184,Uncertain,17,-80,-34
+185,Uncertain,35,-67,-34
+186,Fronto-parietal Task Control,47,10,33
+187,Fronto-parietal Task Control,-41,6,33
+188,Fronto-parietal Task Control,-42,38,21
+189,Fronto-parietal Task Control,38,43,15
+190,Fronto-parietal Task Control,49,-42,45
+191,Fronto-parietal Task Control,-28,-58,48
+192,Fronto-parietal Task Control,44,-53,47
+193,Fronto-parietal Task Control,32,14,56
+194,Fronto-parietal Task Control,37,-65,40
+195,Fronto-parietal Task Control,-42,-55,45
+196,Fronto-parietal Task Control,40,18,40
+197,Fronto-parietal Task Control,-34,55,4
+198,Fronto-parietal Task Control,-42,45,-2
+199,Fronto-parietal Task Control,33,-53,44
+200,Fronto-parietal Task Control,43,49,-2
+201,Fronto-parietal Task Control,-42,25,30
+202,Fronto-parietal Task Control,-3,26,44
+203,Salience,11,-39,50
+204,Salience,55,-45,37
+205,Salience,42,0,47
+206,Salience,31,33,26
+207,Salience,48,22,10
+208,Salience,-35,20,0
+209,Salience,36,22,3
+210,Salience,37,32,-2
+211,Salience,34,16,-8
+212,Salience,-11,26,25
+213,Salience,-1,15,44
+214,Salience,-28,52,21
+215,Salience,0,30,27
+216,Salience,5,23,37
+217,Salience,10,22,27
+218,Salience,31,56,14
+219,Salience,26,50,27
+220,Salience,-39,51,17
+221,Memory retrieval?,2,-24,30
+222,Subcortical,6,-24,0
+223,Subcortical,-2,-13,12
+224,Subcortical,-10,-18,7
+225,Subcortical,12,-17,8
+226,Subcortical,-5,-28,-4
+227,Subcortical,-22,7,-5
+228,Subcortical,-15,4,8
+229,Subcortical,31,-14,2
+230,Subcortical,23,10,1
+231,Subcortical,29,1,4
+232,Subcortical,-31,-11,0
+233,Subcortical,15,5,7
+234,Subcortical,9,-4,6
+235,Ventral attention,54,-43,22
+236,Ventral attention,-56,-50,10
+237,Ventral attention,-55,-40,14
+238,Ventral attention,52,-33,8
+239,Ventral attention,51,-29,-4
+240,Ventral attention,56,-46,11
+241,Ventral attention,53,33,1
+242,Ventral attention,-49,25,-1
+243,Cerebellar,-16,-65,-20
+244,Cerebellar,-32,-55,-25
+245,Cerebellar,22,-58,-23
+246,Cerebellar,1,-62,-18
+247,Uncertain,33,-12,-34
+248,Uncertain,-31,-10,-36
+249,Uncertain,49,-3,-38
+250,Uncertain,-50,-7,-39
+251,Dorsal attention,10,-62,61
+252,Dorsal attention,-52,-63,5
+253,Uncertain,-47,-51,-21
+254,Uncertain,46,-47,-17
+255,Sensory/somatomotor Hand,47,-30,49
+256,Dorsal attention,22,-65,48
+257,Dorsal attention,46,-59,4
+258,Dorsal attention,25,-58,60
+259,Dorsal attention,-33,-46,47
+260,Dorsal attention,-27,-71,37
+261,Dorsal attention,-32,-1,54
+262,Dorsal attention,-42,-60,-9
+263,Dorsal attention,-17,-59,64
+264,Dorsal attention,29,-5,54
+265,L NAcc ,-12,8,-8
+266,R NAcc ,12,8,-8
+267,L sgACC,-4,15,-11
+268,R sgACC,4,15,-11
+269,L Caudate Head,-12,18,-3
+270,R Caudate Head,12,18,-3
+271,L Amyg,-19,-2,-21
+272,R Amyg,19,-2,-21
+273,L Ventral Hippocampus,-27,-15,-18
+274,R Ventral Hippocampus,27,-15,-18
+275,LC,3,-33,-27
+276,VTA,6,-15,-15
+277,Raphe,6,-27,-21
+278,LC,-3,-33,-27
+279,VTA,-6,-15,-15
+280,Raphe,-6,-27,-21
