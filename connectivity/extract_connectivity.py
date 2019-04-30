@@ -34,15 +34,19 @@ def time_course_extractor(connectivity_obj, outpath=None):
                                            memory='nilearn_cache',
                                            verbose=5)
             anImg = nib.load(fname)
-            time_series = masker_obj.fit_transform(anImg)
-            cormat = connectivity_obj.fit_transform([time_series])[0]
-            
-            if save_csv and outpath:
+            try:
+                time_series = masker_obj.fit_transform(anImg)
+                cormat = connectivity_obj.fit_transform([time_series])[0]
+            except:
+                time_series = None
+                cormat = None
+            if time_series is None or cormat is None:
+                print('Could not compute time series for this file, skipping: {}'.format(fname))
+            elif save_csv and outpath:
                 if not os.path.isdir(outpath):
                     raise Exception("Cannot find output dir {}".format(outpath))
                 else:
-                    save_one(fname, time_series, cormat, labels, outpath)
-                
+                    save_one(fname, time_series, cormat, labels, outpath)    
         else:
             time_series = []
             cormat = []
