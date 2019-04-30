@@ -154,7 +154,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_fd_threshold=None, spiker
 
     Ng et al. (2016). http://doi.org/10.1016/j.neuroimage.2016.03.029
     """
-    if kind not in ["36P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"]:
+    if kind not in ["36P", "18P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"]:
         raise Exception("Confound type unknown {}".format(kind))
 
     df = pd.read_csv(confounds_file, sep="\t")

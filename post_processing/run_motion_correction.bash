@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-#ensure you've run `scl enable rh-python36 bash`
+#Ensure that the appropriate python libraries are available
+#e.g., `source activate my_conda_env`
 
 OVERWRITE_REGRESS=0
 
@@ -25,9 +26,6 @@ fi
 
 module load afni
 
-
-
-
 #location of motion regression script
 regress_script="/home/jflournoy/code/mellon/post_processing/regress.py"
 
@@ -36,7 +34,8 @@ bids_derivs="/data/mounts/scs-fs-20/kpsy/genr/mrdata/GenR_MRI/bids/derivatives/f
 outdir="/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/GenR_motion"
 
 #set to either T1w, or MNI152NLin2009cAsym
-space="MNI152NLin2009cAsym"
+#space="MNI152NLin2009cAsym"
+space="T1w"
 
 mask_postfix="brain_mask.nii.gz"
 bold_postfix="preproc_bold.nii.gz"
