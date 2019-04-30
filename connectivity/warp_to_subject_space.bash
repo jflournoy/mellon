@@ -5,28 +5,31 @@
 #SBATCH --time=2-00:00:00
 #SBATCH --partition=ncf_holy
 #SBATCH --mail-type=END,FAIL
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=30000M
+#SBATCH --cpus-per-task=1
 
-SUBNUM=$SLURM_ARRAY_TASK_ID
+#subnum of form "sub-1" is the first argument to the script
+SUBNUM=$1
 
-transforms_dir="/net/holynfs01/srv/export/mclaughlin/share_root/stressdevlab/GenR_derivatives/new_study_template/"
-MNItoTemplateAffine="[GRtemplateToMNI0GenericAffine.mat,1]"
-MNItoTemplateWarp="GRtemplateToMNI1InverseWarp.nii.gz"
-TemplatetoSubAffine="[GRsub-${SUBNUM}_desc-preproc_T1wAffine.txt, 1]"
-TemplatetoSubWarp="GRsub-${SUBNUM}_desc-preproc_T1wInverseWarp.nii.gz"
-SUB_DIR=
-ncore=`nproc`
+ROI_IMAGE="/path/to/roi_image.nii"
+ROI_NAME="power" #for naming the warped image
+SUB_DIR="/path/to/fmriprep/output/${SUBNUM}/anat/"
+SUB_T1W="${SUB_DIR}/${SUBNUM}_desc-preproc_T1w.nii.gz"
 
-# CD to the T1 directory where all the T1 images live
 cd $SUB_DIR
 
+MNItoTemplateAffine="[genr_to_mni0GenericAffine.mat,1]" #1 here specifies it's an inverse transform
+MNItoTemplateWarp="genr_to_mni1InverseWarp.nii.gz"
+sub_to_template_affine="[${SUBNUM}_desc-preproc_T1w_to_genrAffine.txt, 1]"
+sub_to_template_warp="${SUBNUM}_desc-preproc_T1w_to_genrInverseWarp.nii.gz"
+
+ncore=1
+
+cd $SUB_DIR
 
 #Set up ANTS path:
 module load ants/2.3.1-ncf
 
 #Build T1 template:
 
-antsApplyTransforms -i $(word 1,$^) -r $(MNI_BRAIN) -t $(DT_REG_PREFIX)_1Warp.nii.gz $(DT_REG_PREFIX)_0GenericAffine.mat xfm_dir/T1_to_custom_s_1Warp.nii.gz  xfm_dir/T1_to_custom_s_0GenericAffine.mat  xfm_dir/$${TASK}/$${RUN}_to_T1_r_0GenericAffine.mat -o $@ ;\
+antsApplyTransforms -i "${ROI_IMAGE}" -r "${SUB_T1W}" -t "${sub_to_template_warp}" "${sub_to_template_affine}" "${MNItoTemplateWarp}" "${MNItoTemplateAffine}" -o "${SUBNUM}-${ROI_NAME}_warped.nii"
 
-exit
