@@ -178,19 +178,20 @@ def main():
     
     print('Extraction completed in {} seconds'.format(np.round(total,1)))
     
-    if save_mean_cor:
-        mean_mat_fname = os.path.join(outpath, 'mean_correlation_matrix.csv')
-        print('Computing and saving mean correlation matrix to {}'.format(mean_mat_fname))
-        
-        somemats = connectivity_obj.fit_transform(timeseries)
-        mean_mat = connectivity_obj.mean_
-        mean_mat_uppertri_indexes = np.triu_indices_from(mean_mat, k=1)
-        mean_mat_uppertri_data = mean_mat[mean_mat_uppertri_indexes]
-
-        mean_mat_df = pd.DataFrame({'r': mean_mat_uppertri_data, 
-                                    'row': mean_mat_uppertri_indexes[0], 
-                                    'col': mean_mat_uppertri_indexes[1]})
-        mean_mat_df.to_csv(mean_mat_fname)
+#    if save_mean_cor:
+#        mean_mat_fname = os.path.join(outpath, 'mean_correlation_matrix.csv')
+#        print('Computing and saving mean correlation matrix to {}'.format(mean_mat_fname))
+#       	print('using {} timeseries to compute mean'.format(len(timeseries))) 
+#        somemats = connectivity_obj.fit_transform(timeseries)
+#        mean_mat = connectivity_obj.mean_
+#        print('mean mat has shape {}'.format(mean_mat.shape))
+#        mean_mat_uppertri_indexes = np.triu_indices_from(mean_mat, k=1)
+#        mean_mat_uppertri_data = mean_mat[mean_mat_uppertri_indexes]
+#
+#        mean_mat_df = pd.DataFrame({'r': mean_mat_uppertri_data, 
+#                                    'row': mean_mat_uppertri_indexes[0], 
+#                                    'col': mean_mat_uppertri_indexes[1]})
+#        mean_mat_df.to_csv(mean_mat_fname)
 
     print('All done!')
         
