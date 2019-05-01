@@ -6,25 +6,26 @@
 #SBATCH --partition=ncf_holy
 #SBATCH --mail-type=END,FAIL
 #SBATCH --cpus-per-task=1
+#SBATCH --mem=8000M
 
 #subnum of form "sub-1" is the first argument to the script
 SUBNUM=$1
 
-ROI_IMAGE="/path/to/roi_image.nii"
-ROI_NAME="power" #for naming the warped image
-SUB_DIR="/path/to/fmriprep/output/${SUBNUM}/anat/"
+ROI_IMAGE="/home/jflournoy/code/mellon/power_spheres/power_drysdale_mclaughlin_spheres.nii"
+ROI_NAME="power_drysdale" #for naming the warped image
+SUB_DIR="/net/holynfs01/srv/export/mclaughlin/share_root/stressdevlab/GenR_derivatives/fmriprep/${SUBNUM}/anat/"
 SUB_T1W="${SUB_DIR}/${SUBNUM}_desc-preproc_T1w.nii.gz"
+TEMPLATE_DIR="/net/holynfs01/srv/export/mclaughlin/share_root/stressdevlab/GenR_derivatives/new_study_template"
 
 cd $SUB_DIR
 
-MNItoTemplateAffine="[genr_to_mni0GenericAffine.mat,1]" #1 here specifies it's an inverse transform
-MNItoTemplateWarp="genr_to_mni1InverseWarp.nii.gz"
-sub_to_template_affine="[${SUBNUM}_desc-preproc_T1w_to_genrAffine.txt, 1]"
-sub_to_template_warp="${SUBNUM}_desc-preproc_T1w_to_genrInverseWarp.nii.gz"
+MNItoTemplateAffine="[${TEMPLATE_DIR}/genr_to_mni0GenericAffine.mat,1]" #1 here specifies it's an inverse transform
+MNItoTemplateWarp="${TEMPLATE_DIR}/genr_to_mni1InverseWarp.nii.gz"
+sub_to_template_affine="[${SUBNUM}_desc-preproc_T1w_to_genr0GenericAffine.mat, 1]"
+sub_to_template_warp="${SUBNUM}_desc-preproc_T1w_to_genr1InverseWarp.nii.gz"
 
 ncore=1
 
-cd $SUB_DIR
 
 #Set up ANTS path:
 module load ants/2.3.1-ncf
