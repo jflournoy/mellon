@@ -36,6 +36,7 @@ outdir="/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/GenR_motion"
 #set to either T1w, or MNI152NLin2009cAsym
 #space="MNI152NLin2009cAsym"
 space="T1w"
+strategy="36P"
 
 mask_postfix="brain_mask.nii.gz"
 bold_postfix="preproc_bold.nii.gz"
@@ -66,8 +67,8 @@ for subj in ${subjects[*]} ; do
 
 	subj_outdir=${outdir}/${subj}/ses-F09/func
 	subj_dspk_out=${subj_outdir}/${filename_stem}${despike_postfix}
-	subj_mtcr_out=${subj_outdir}/${filename_stem}
-	subj_mtcr_check=${subj_outdir}/${filename_stem}nuisanced_bold.nii.gz
+	subj_mtcr_out=${subj_outdir}/${filename_stem}${strategy}_
+	subj_mtcr_check=${subj_mtcr_out}nuisanced_bold.nii.gz
 
         #check if the 'target' processing is done
         if [ -e ${subj_mtcr_check} ] && [ ! $OVERWRITE_REGRESS -eq 1 ] ; then
@@ -119,7 +120,7 @@ for subj in ${subjects[*]} ; do
 
 	fi
 	echo "Running motion correction on ${subj_dspk_out}"
-	python $regress_script -strategy "36P" -spikethr .5 -fwhm 5 -drop 5 -out $subj_mtcr_out ${subj_dspk_out} $subj_mask $subj_confounds
+	python $regress_script -strategy ${strategy} -spikethr .5 -fwhm 5 -drop 5 -out $subj_mtcr_out ${subj_dspk_out} $subj_mask $subj_confounds
 	
 
         #clean up isRunning file if you want
