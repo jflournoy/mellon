@@ -27,7 +27,7 @@ names(file_list) <- unlist(lapply(file_list, gsub, pattern = '.*(sub-\\d+).*', r
 #we need to split this list into groups of size `number_of_subs_per_fig` 
 num_unique_groups <- length(file_list) %/% number_of_subs_per_fig + 1
 #split it the file list
-split_flist <- split(file_list, rep(factor(1:number_of_subs_per_fig), length.out = length(file_list)))
+split_flist <- split(file_list, rep(factor(1:num_unique_groups), length.out = length(file_list)))
 
 #We also want the mean correlation mat which we can construct in parallel 
 split_for_mean_mat_flist <- split(file_list, rep(factor(1:number_of_processes), length.out = length(file_list)))
