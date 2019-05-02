@@ -40,8 +40,8 @@ split_qa_list <- cbind(11:(num_unique_groups), rep(1:2, each = (num_unique_group
 qa_flist_half_1 <- qa_flist_df[qa_flist_df$pdf %in% split_qa_list[split_qa_list[,2] == 1,1], ]
 qa_flist_half_2 <- qa_flist_df[qa_flist_df$pdf %in% split_qa_list[split_qa_list[,2] == 2,1], ]
 
-write.csv(qa_flist_half_1, file = file.path('/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/rsfc_qa/', 'histogram_qa_jannel.csv'))
-write.csv(qa_flist_half_2, file = file.path('/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/rsfc_qa/', 'histogram_qa_patricia.csv'))
+write.csv(qa_flist_half_1, file = file.path('/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/rsfc_qa/', 'histogram_qa_jannel.csv'), row.names = F)
+write.csv(qa_flist_half_2, file = file.path('/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/rsfc_qa/', 'histogram_qa_patricia.csv'), row.names = F)
 ####
 
 #We also want the mean correlation mat which we can construct in parallel 
