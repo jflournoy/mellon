@@ -29,6 +29,21 @@ num_unique_groups <- length(file_list) %/% number_of_subs_per_fig + 1
 #split it the file list
 split_flist <- split(file_list, rep(factor(1:num_unique_groups), length.out = length(file_list)))
 
+####
+#Create files to help with QA
+qa_flist_df <- data.frame(pdf = rep(factor(1:num_unique_groups), length.out = length(file_list)), 
+                          sid = gsub('.*sub-(\\d+).*', '\\1', file_list))
+qa_flist_df <- qa_flist_df[order(qa_flist_df$pdf), ]
+qa_flist_10 <- qa_flist_df[qa_flist_df$pdf %in% 1:10, ]
+
+split_qa_list <- cbind(11:(num_unique_groups), rep(1:2, each = (num_unique_groups-10)/2))
+qa_flist_half_1 <- qa_flist_df[qa_flist_df$pdf %in% split_qa_list[split_qa_list[,2] == 1,1], ]
+qa_flist_half_2 <- qa_flist_df[qa_flist_df$pdf %in% split_qa_list[split_qa_list[,2] == 2,1], ]
+
+write.csv(qa_flist_half_1, file = file.path('/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/rsfc_qa/', 'histogram_qa_jannel.csv'))
+write.csv(qa_flist_half_2, file = file.path('/data/mounts/scs-fs-20/kpsy/genr/users/jflournoy/rsfc_qa/', 'histogram_qa_patricia.csv'))
+####
+
 #We also want the mean correlation mat which we can construct in parallel 
 split_for_mean_mat_flist <- split(file_list, rep(factor(1:number_of_processes), length.out = length(file_list)))
 
