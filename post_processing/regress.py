@@ -131,6 +131,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_fd_threshold=None, spiker
     """
     takes a fmriprep confounds file and creates data frame with regressors.
     kind == "36P" returns Satterthwaite's 36P confound regressors
+    kind == "18P" returns Satterthwaite's 36P confound regressors without the squared terms
     kind == "9P" returns CSF, WM, Global signal + 6 motion parameters (used in 
             Ng et al., 2016)
     kind == "aCompCor"* returns model no. 11 from Parkes
@@ -263,6 +264,7 @@ def main():
     
     print("Reading in images...")
     # read in the data
+    
     inputImg = nib.load(args.fmri)
     inputMask = nib.load(args.mask)
 
