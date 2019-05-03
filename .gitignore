@@ -2,3 +2,7 @@
 *.swp
 .ipynb*
 example_sub.py
+*.err
+*.out
+*.xlsx
+*.txt
