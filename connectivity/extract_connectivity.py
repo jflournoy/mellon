@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 #
 
+#requires installation of argparse, nibabel, numpy, matplotlib, pandas, nilearn, joblib
+
 import os
 import re
 import time
