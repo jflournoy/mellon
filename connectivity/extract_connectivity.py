@@ -23,10 +23,11 @@ def parallel_extract(input_file_list, label_def, labels, exclude, connectivity_o
     print("Extracting from {} files using {} processes...".format(input_file_list.shape[0], num_cores))
     extract_corrs = time_course_extractor(connectivity_obj, outpath=outpath)
     extract_args_zip, rs_files_included = make_extract_arg_zips(input_file_list, label_def, exclude, idcol)
-    results = Parallel(n_jobs=num_cores, verbose=verbose)(delayed(extract_corrs)(f, l, i, labels=labels, save_csv=save_csv) for f, l, i in extract_args_zip)
-    timeseries = [rez[0] for rez in results]
-    corrmats = [rez[1] for rez in results]
-    return timeseries, corrmats, rs_files_included
+    #results = 
+    Parallel(n_jobs=num_cores, verbose=verbose)(delayed(extract_corrs)(f, l, i, labels=labels, save_csv=save_csv) for f, l, i in extract_args_zip)
+    #timeseries = [rez[0] for rez in results]
+    #corrmats = [rez[1] for rez in results]
+    #return timeseries, corrmats, rs_files_included
 
 def time_course_extractor(connectivity_obj, outpath=None):
     def extract(fname, masker_fname, sid, labels, save_csv=True):
@@ -53,7 +54,7 @@ def time_course_extractor(connectivity_obj, outpath=None):
             warnings.warn('Cannot find file(s) {}, {}'.format(fname,masker_fname))
             time_series = []
             cormat = []
-        return time_series, cormat
+        #return time_series, cormat
     return extract
 
 def save_one(f, t, c, sid, labels, outpath):
@@ -174,35 +175,20 @@ def main():
     
     print('Beginning functional connectivity extraction using {} cores...'.format(num_cores))
     
-    timeseries, corrmats, rs_files_included  = parallel_extract(input_file_list=input_file_list,
-                                                                label_def=label_image_fname,
-                                                                labels=labels,
-                                                                exclude=exclude,
-                                                                connectivity_obj=connectivity_obj,
-                                                                outpath=outpath,
-                                                                save_csv=save_csv,
-                                                                idcol=idcol,
-                                                                num_cores=num_cores, 
-                                                                verbose=args.verbose)
+    parallel_extract(input_file_list=input_file_list,
+                     label_def=label_image_fname,
+                     labels=labels,
+                     exclude=exclude,
+                     connectivity_obj=connectivity_obj,
+                     outpath=outpath,
+                     save_csv=save_csv,
+                     idcol=idcol,
+                     num_cores=num_cores, 
+                     verbose=args.verbose)
     t1 = time.time()
     total = t1-t0
     
     print('Extraction completed in {} seconds'.format(np.round(total,1)))
-    
-#    if save_mean_cor:
-#        mean_mat_fname = os.path.join(outpath, 'mean_correlation_matrix.csv')
-#        print('Computing and saving mean correlation matrix to {}'.format(mean_mat_fname))
-#       	print('using {} timeseries to compute mean'.format(len(timeseries))) 
-#        somemats = connectivity_obj.fit_transform(timeseries)
-#        mean_mat = connectivity_obj.mean_
-#        print('mean mat has shape {}'.format(mean_mat.shape))
-#        mean_mat_uppertri_indexes = np.triu_indices_from(mean_mat, k=1)
-#        mean_mat_uppertri_data = mean_mat[mean_mat_uppertri_indexes]
-#
-#        mean_mat_df = pd.DataFrame({'r': mean_mat_uppertri_data, 
-#                                    'row': mean_mat_uppertri_indexes[0], 
-#                                    'col': mean_mat_uppertri_indexes[1]})
-#        mean_mat_df.to_csv(mean_mat_fname)
 
     print('All done!')
         
