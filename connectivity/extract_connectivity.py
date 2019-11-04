@@ -58,7 +58,7 @@ def time_course_extractor(connectivity_obj, outpath=None):
     return extract
 
 def save_one(f, t, c, sid, labels, outpath):
-    sid = sid.astype(str)
+    sid = str(sid)
     sid_outpath = os.path.join(outpath, sid)
     if not os.path.isdir(sid_outpath):
         try:
