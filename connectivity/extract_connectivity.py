@@ -19,18 +19,18 @@ from nilearn.connectome import ConnectivityMeasure
 from nilearn import plotting
 from joblib import Parallel, delayed
 
-def parallel_extract(input_file_list, label_def, labels, exclude, connectivity_obj, outpath=None, save_csv=True, idcol=False, num_cores=1, verbose=0):
+def parallel_extract(input_file_list, label_def, labels, roi_numbers, exclude, connectivity_obj, outpath=None, save_csv=True, idcol=False, num_cores=1, verbose=0):
     print("Extracting from {} files using {} processes...".format(input_file_list.shape[0], num_cores))
     extract_corrs = time_course_extractor(connectivity_obj, outpath=outpath)
     extract_args_zip, rs_files_included = make_extract_arg_zips(input_file_list, label_def, exclude, idcol)
     #results = 
-    Parallel(n_jobs=num_cores, verbose=verbose)(delayed(extract_corrs)(f, l, i, labels=labels, save_csv=save_csv) for f, l, i in extract_args_zip)
+    Parallel(n_jobs=num_cores, verbose=verbose)(delayed(extract_corrs)(f, l, i, labels=labels, roi_numbers=roi_numbers, save_csv=save_csv) for f, l, i in extract_args_zip)
     #timeseries = [rez[0] for rez in results]
     #corrmats = [rez[1] for rez in results]
     #return timeseries, corrmats, rs_files_included
 
 def time_course_extractor(connectivity_obj, outpath=None):
-    def extract(fname, masker_fname, sid, labels, save_csv=True):
+    def extract(fname, masker_fname, sid, labels, roi_numbers, save_csv=True):
         if os.path.isfile(fname) and os.path.isfile(masker_fname):
             masker_obj = NiftiLabelsMasker(labels_img=masker_fname, 
                                            standardize=True,
@@ -40,16 +40,24 @@ def time_course_extractor(connectivity_obj, outpath=None):
             try:
                 time_series = masker_obj.fit_transform(anImg)
                 cormat = connectivity_obj.fit_transform([time_series])[0]
-            except:
+            except Exception:
                 time_series = None
                 cormat = None
             if time_series is None or cormat is None:
                 print('Could not compute time series for this file, skipping: {}'.format(fname))
             elif save_csv and outpath:
+                try:
+                    masker_labels = np.asarray(masker_obj.labels_))
+                    labels_extracted = labels[np.isin(roi_numbers, masker_labels)]
+                    if not (cormat.shape[0] == labels_extracted.shape[0] & time_series.shape[1] == labels_extracted.shape[0]):
+                        raise Exception("Shape of extracted data and implied labels do not match. Labels will be set to 999.")
+                except Exception:
+                    masker_labels = np.arange(999, 999+time_series.shape[1], 1)
+                    labels_extracted = masker_labels
                 if not os.path.isdir(outpath):
                     raise Exception("Cannot find output dir {}".format(outpath))
                 else:
-                    save_one(fname, time_series, cormat, sid, labels, outpath)    
+                    save_one(fname, time_series, cormat, sid, labels_extracted, masker_labels, outpath)    
         else:
             warnings.warn('Cannot find file(s) {}, {}'.format(fname,masker_fname))
             time_series = []
@@ -57,7 +65,7 @@ def time_course_extractor(connectivity_obj, outpath=None):
         #return time_series, cormat
     return extract
 
-def save_one(f, t, c, sid, labels, outpath):
+def save_one(f, t, c, sid, labels_extracted, masker_labels, outpath):
     sid = str(sid)
     sid_outpath = os.path.join(outpath, sid)
     if not os.path.isdir(sid_outpath):
@@ -73,8 +81,10 @@ def save_one(f, t, c, sid, labels, outpath):
     uppertri_indexes = np.triu_indices_from(c, k=1)
     uppertri_data = c[uppertri_indexes]
 
-    c_df = pd.DataFrame({'r': uppertri_data, 'row': uppertri_indexes[0], 'col': uppertri_indexes[1]})
-    t_df = pd.DataFrame(t, columns=labels).assign(tr = list(range(1,t.shape[0]+1))).melt(id_vars='tr', var_name='label')
+    cor_row_rois = masker_labels[uppertri_indexes[0]].astype(int)
+    cor_col_rois = masker_labels[uppertri_indexes[1]].astype(int)
+    c_df = pd.DataFrame({'r': uppertri_data, 'row': cor_row_rois, 'col': cor_col_rois})
+    t_df = pd.DataFrame(t, columns=labels_extracted).assign(tr = list(range(1,t.shape[0]+1))).melt(id_vars='tr', var_name='label')
 
     c_df.to_csv(outfilename_cr)
     t_df.to_csv(outfilename_ts)
@@ -115,7 +125,7 @@ def main():
     parser.add_argument('-i', type=str, help='input rs file list (csv with at least one column named \'file\')')
     parser.add_argument('-idcol', action='store_true', help='input rs file list contains column \'id\' to use for naming output files. Note: this must be true if data does not follow BIDS naming conventions.')
     parser.add_argument('-label_img', type=str, help='label image defining parcels (nii) or list of such images (csv with at least one column named \'file\')')
-    parser.add_argument('-label_names', type=str, help='filename to find label ids for use in column naming (csv with at least one column named \'label\')', default=0)
+    parser.add_argument('-label_names', type=str, help='filename to find label ids for use in column naming (csv with at least one column named \'label\', and one column named \'roi\' that gives the integer value used in the nii volume to mark the parcel)', default=0)
     parser.add_argument('-outname', type=str, help='name to be used for output files', default='rsfc_output')
     parser.add_argument('-outdir', type=str, help='directory to save the rsfc derivatives')
     parser.add_argument('-numcores', type=int, help='number of cores or processes to use', default='1')
@@ -162,6 +172,10 @@ def main():
         raise Exception('Label csv file needs column named "label" but only has: {}'.format(', '.join(label_df.columns)))
     else:
         labels = list(label_df['label'].values)
+    if 'roi' not in label_df.columns:
+        raise Exception('Label csv file needs column named "roi" but only has: {}'.format(', '.join(label_df.columns)))
+    else:
+        roi_numbers = list(label_df['roi'].values)
 
     connectivity_obj = ConnectivityMeasure(kind=connectivity_kind)
 
@@ -178,6 +192,7 @@ def main():
     parallel_extract(input_file_list=input_file_list,
                      label_def=label_image_fname,
                      labels=labels,
+                     roi_numbers=roi_numbers,
                      exclude=exclude,
                      connectivity_obj=connectivity_obj,
                      outpath=outpath,
