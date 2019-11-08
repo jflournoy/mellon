@@ -40,24 +40,32 @@ def time_course_extractor(connectivity_obj, outpath=None):
             try:
                 time_series = masker_obj.fit_transform(anImg)
                 cormat = connectivity_obj.fit_transform([time_series])[0]
-            except Exception:
+            except Exception as e:
+                print("Problem extracting: ")
+                print(e)
                 time_series = None
                 cormat = None
             if time_series is None or cormat is None:
                 print('Could not compute time series for this file, skipping: {}'.format(fname))
             elif save_csv and outpath:
                 try:
-                    masker_labels = np.asarray(masker_obj.labels_))
-                    labels_extracted = labels[np.isin(roi_numbers, masker_labels)]
+                    #print(masker_obj.labels_)
+                    masker_labels = np.asarray(masker_obj.labels_)
+                    #print(masker_labels)
+                    #print(roi_numbers)
+                    labels_extracted = np.array(labels)[np.isin(roi_numbers, masker_labels)]
+                    #print(labels_extracted)
                     if not (cormat.shape[0] == labels_extracted.shape[0] & time_series.shape[1] == labels_extracted.shape[0]):
                         raise Exception("Shape of extracted data and implied labels do not match. Labels will be set to 999.")
-                except Exception:
+                except Exception as e:
+                    print("Problem setting labels: ")
+                    print(e)
                     masker_labels = np.arange(999, 999+time_series.shape[1], 1)
                     labels_extracted = masker_labels
                 if not os.path.isdir(outpath):
                     raise Exception("Cannot find output dir {}".format(outpath))
                 else:
-                    save_one(fname, time_series, cormat, sid, labels_extracted, masker_labels, outpath)    
+                    save_one(fname, time_series, cormat, sid, labels_extracted, masker_labels, outpath, use_number_labels_only=True)    
         else:
             warnings.warn('Cannot find file(s) {}, {}'.format(fname,masker_fname))
             time_series = []
@@ -65,14 +73,15 @@ def time_course_extractor(connectivity_obj, outpath=None):
         #return time_series, cormat
     return extract
 
-def save_one(f, t, c, sid, labels_extracted, masker_labels, outpath):
+def save_one(f, t, c, sid, labels_extracted, masker_labels, outpath, use_number_labels_only=False):
     sid = str(sid)
     sid_outpath = os.path.join(outpath, sid)
     if not os.path.isdir(sid_outpath):
         try:
             os.makedirs(sid_outpath)
-        except:
+        except Exception as e:
             print("Cannot make dir {}".format(sid_outpath))
+            print(e)
             raise
     outfilename = sid
     outfilename_cr = os.path.join(sid_outpath, outfilename + '_corrmat.csv')
@@ -83,11 +92,13 @@ def save_one(f, t, c, sid, labels_extracted, masker_labels, outpath):
 
     cor_row_rois = masker_labels[uppertri_indexes[0]].astype(int)
     cor_col_rois = masker_labels[uppertri_indexes[1]].astype(int)
+    if use_number_labels_only:
+        labels_extracted=masker_labels.astype(int)
     c_df = pd.DataFrame({'r': uppertri_data, 'row': cor_row_rois, 'col': cor_col_rois})
     t_df = pd.DataFrame(t, columns=labels_extracted).assign(tr = list(range(1,t.shape[0]+1))).melt(id_vars='tr', var_name='label')
 
-    c_df.to_csv(outfilename_cr)
-    t_df.to_csv(outfilename_ts)
+    c_df.to_csv(outfilename_cr, index = False)
+    t_df.to_csv(outfilename_ts, index = False)
 
 def make_extract_arg_zips(input_filenames, label_def_filename, exclude, idcol):
     #if the parcel fname is a list, then assume it has a list of subject-specific 
@@ -106,7 +117,6 @@ def make_extract_arg_zips(input_filenames, label_def_filename, exclude, idcol):
         extract_args_zip = zip(list(input_file_list_include), cycle([label_def_filename]))
     elif label_image_file_is_csv:
         print("Using list of parcellation files from {}".format(label_def_filename))
-    #        raise Exception("TEST THIS CODE FIRST")
         label_image_fnames = pd.read_csv(label_def_filename)
         label_image_fnames_include = label_image_fnames.loc[exclude == 0,'file'].values
         if len(input_file_list_include) != len(label_image_fnames_include):
@@ -116,8 +126,6 @@ def make_extract_arg_zips(input_filenames, label_def_filename, exclude, idcol):
         raise Exception("Label definition is neither .nii or .csv: {}".format(label_def_filename))
     
     return extract_args_zip, input_file_list_include
-
-
 
 def main():
     t0 = time.time()
